@@ -20,3 +20,11 @@ My notes from the course on Udemy.
   - None! (in theory)
   - There are some changes you need to make for tracing
   - TODO determine whether we are using this sort of tracing
+* Hands on Istio demo
+- Repo for the course https://github.com/DickChesterwood/istio-fleetman
+** Getting istio running
+(in the warmup-exercise directory)
+*** Apply the manifests to install istio
+    #+begin_src sh
+      kubectl apply -f 1-istio-init.yaml
+    #+end_src
