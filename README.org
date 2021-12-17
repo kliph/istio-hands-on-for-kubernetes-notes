@@ -1,3 +1,22 @@
 * Istio Hands-On for Kubernetes
 
 My notes from the course on Udemy.
+* What is Istio?
+- [[https://thenewstack.io/how-does-service-discovery-work-in-kubernetes/][Service discovery mechanism]] in kubernetes allows network calls among containers
+- Service Mesh replaces the kubernetes service communication mechanism
+  - All network calls go through the service mesh layer
+  - The service mesh can apply *mesh logic* before the request is routed to the target container or it could run after, or both
+- What sorts of stuff happens in the service mesh layer?
+  - Telemetry
+  - Potentially rerouting requests based on certain requirements (sounds familiar)
+- Istio injects a container to each pod
+  - This container is called a proxy.  The ones I've seen are named =istio-proxy=
+  - In istio, the proxies communicate with the mesh layer and the app container.  App containers don't talk directly to the mesh layer or each other.
+- Istio's got all sorts of obtuse nautical names that make it harder to understand when you're a newb
+- They simplified some of the nautical names to a single =istiod= daemon (it used to be called "pilot" 🙄) that lives in the =istio-system= pod in your cluster
+  - This is referred to as the "control plane"
+  - Kiali is a user interface pod in the control plane. Presumably its name will make sense at some point.
+- What changes do we need to make to our application containers to make this work?
+  - None! (in theory)
+  - There are some changes you need to make for tracing
+  - TODO determine whether we are using this sort of tracing
