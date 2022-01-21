@@ -28,3 +28,37 @@ My notes from the course on Udemy.
     #+begin_src sh
       kubectl apply -f 1-istio-init.yaml
     #+end_src
+
+Sets up a namespace and initializes a lot of stuff
+*** To remove
+    #+begin_src sh
+      kubectl delete -f 1-istio-init.yaml
+    #+end_src
+*** Apply the manifests to start istio
+    #+begin_src sh
+      kubectl apply -f 2-istio-minikube.yaml
+    #+end_src
+
+Creates a bunch of deployments in the istio namespace
+*** Install the Kiali secrets file
+    #+begin_src sh
+      kubectl apply -f 3-kiali-secret.yaml
+    #+end_src
+
+The username and password are base64 encoded.  You can decode them with
+
+#+begin_src sh
+  echo "YWRtaW4=" | base64 -d
+#+end_src
+*** Injecting the istio-proxy sidecar
+The istio-proxy is injected into each pod in a namespace via the istiod based on the presence of a label in the namespace.
+
+#+begin_src sh
+  kubectl label namespace default istio-injection=enabled
+#+end_src
+To remove:
+#+begin_src sh
+  kubectl label namespace default istio-injection-
+#+end_src
+
+Whew this syntax is garbage.  Sort of like deleting a branch in git used to require colons in a special place.  Much easier to use the manifest :)
