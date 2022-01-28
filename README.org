@@ -139,3 +139,13 @@ which means it's working!
 - Observe that the vehicle positions update faster now in the app rather than taking on the order of minutes to fully update.
 
 * Introducing Envoy
+- Envoy's an open source project distinct from istio that comes from Lyft originally.
+- There's confusing terminology for the proxy that istio injects into all pods in kubernetes.  They're called =envoy=, =proxy=, =sidecar=.
+- I think the course typically calls it the proxy.
+- Sidecar is just a method of injecting pods in Kubernetes
+- Envoy is probably most specific because it is an envoy proxy
+- Envoy has distinct concepts from istio, so it's more convenient to use istio in the course's opinion
+  - For example envoy uses =clusters= to mean something distinct from kubernetes clusters
+- The proxies are collectively called the data plane in istio
+
+* Telemetry
