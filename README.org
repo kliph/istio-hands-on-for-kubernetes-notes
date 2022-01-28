@@ -114,4 +114,28 @@ In order to visit the Fleet Manager web app, I am able to set up port forwarding
 
 which means it's working!
 
-*** Finding perf problems
+
+** Finding perf problems
+- We can use Kiali at localhost:31000 to diagnose issues with the services in the service mesh
+- We can use Jaeger to view request traces at localhost:31001
+- Interesting to think about service degredation or removal in the context of our prod microservices
+- We can modify the service mesh to drop a request that is causing knock on errors in our system
+- In this case we want to use a timeout, see https://istio.io/latest/docs/tasks/traffic-management/request-timeouts/
+
+*** fleetman-driver-monitoring
+
+#+begin_src yaml
+  kind: VirtualService
+  metadata:
+    name: fleetman-driver-monitoring
+  ...
+  http:
+  ...
+    timeout: 1s
+#+end_src
+
+
+- Reapply the app's manifest
+- Observe that the vehicle positions update faster now in the app rather than taking on the order of minutes to fully update.
+
+* Introducing Envoy
