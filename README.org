@@ -62,3 +62,56 @@ To remove:
 #+end_src
 
 Whew this syntax is garbage.  Sort of like deleting a branch in git used to require colons in a special place.  Much easier to use the manifest :)
+
+Istio uses init containers to do the injecting https://kubernetes.io/docs/concepts/workloads/pods/init-containers/ .  That explains the =Completed= =istio-init= we see when inspecting the containers within a pod.
+
+*** Deploying up the application
+
+#+begin_src sh
+kubectl apply -f 4-application-full-stack.yaml
+#+end_src
+
+In order to visit the Fleet Manager web app, I am able to set up port forwarding for the webapp directly but I don't think that's going through istio.
+
+*** How do I expose my webapp through istio so I can access it from localhost running in Kubernetes for Docker Desktop?
+- I tried following https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/#determining-the-ingress-ip-and-ports
+  - I determined that my ingress IP is 127.0.0.1 because I'm using Docker Desktop.
+  - I determined that I needed to get the port from a =NodePort= because the =LoadBalancer='s external IP was stuck in a =<pending>= state.
+  - I was not able to connect to the ingress successfully
+
+- I'm going to take a step back and follow istios https://istio.io/latest/docs/setup/getting-started/ guide to determine whether the problem exists in the Udemy course's istio setup.
+  - Still not successful.  The demo istio deployment has the same issue
+  - Checked for any services running on conflicting ports, found one on port 80 and removed it
+  - Was able to port forward the exposed nodeport from the pod running the ingressgateway, I get an empty response, but I can't talk to the application
+  - Resetting kubernetes cluster seems to have done the trick! https://github.com/docker/for-mac/issues/4903
+  - After following the steps in the getting started guide I got:
+
+#+begin_src sh
+  curl -I localhost/productpage
+  HTTP/1.1 200 OK
+  content-type: text/html; charset=utf-8
+  content-length: 5183
+  server: istio-envoy
+  date: Fri, 28 Jan 2022 18:45:50 GMT
+  x-envoy-upstream-service-time: 134
+#+end_src
+
+- When I revisit the example from the Udemy course
+
+#+begin_src sh
+  curl -I http://localhost:30080/
+  HTTP/1.1 200 OK
+  server: istio-envoy
+  date: Fri, 28 Jan 2022 18:58:58 GMT
+  content-type: text/html
+  content-length: 816
+  last-modified: Fri, 11 Oct 2019 19:15:44 GMT
+  etag: "5da0d4e0-330"
+  accept-ranges: bytes
+  x-envoy-upstream-service-time: 0
+  x-envoy-decorator-operation: fleetman-webapp.default.svc.cluster.local:80/*
+#+end_src
+
+which means it's working!
+
+*** Finding perf problems
