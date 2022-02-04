@@ -149,3 +149,19 @@ which means it's working!
 - The proxies are collectively called the data plane in istio
 
 * Telemetry
+- In =_course_files/1\ Telemetry=
+** Kiali
+- Visit [[localhost:30080][localhost:30080]] to see it run
+- Distinction between the sidecar and traffic routing stuff (like VirtualServices and Gateways)
+  - We just need the sidecar envoy proxies for getting telemetry
+- I wonder how [[https://github.com/kiali/kiali][Kiali]] renders its graphs.
+  -Looks like it's using https://cytoscape.org/
+- You can see response times in the workload graph
+- You can turn on Traffic Animation to see the dynamic traffic flowing through the system
+  - The author mentions this as a killer feature of Istio
+  - It's made possible through the envoy proxies
+** Kiali dynamic traffic routing
+- Kiali can suspend traffic to a service directly from the UI
+** Distributed Tracing
+
+* Traffic Management
