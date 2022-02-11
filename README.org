@@ -163,5 +163,12 @@ which means it's working!
 ** Kiali dynamic traffic routing
 - Kiali can suspend traffic to a service directly from the UI
 ** Distributed Tracing
+You can visit Jaeger at localhost:31001/jaeger
+
+- Istio can support distributed tracing without having to change the application code
+- It works via the Envoy proxy running in the sidecar
+- Traces and spans use similar terminology to Datadog
+- Sometimes you may see a doubling up of spans due to the proxies handling requests
+  - I guess if you're not using the proxies you may not see as many spans
 
 * Traffic Management
