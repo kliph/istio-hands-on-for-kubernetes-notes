@@ -170,5 +170,7 @@ You can visit Jaeger at localhost:31001/jaeger
 - Traces and spans use similar terminology to Datadog
 - Sometimes you may see a doubling up of spans due to the proxies handling requests
   - I guess if you're not using the proxies you may not see as many spans
+- The hardest thing about working with distributed traces is finding your traces
+  - I definitely feel this!
 
 * Traffic Management
