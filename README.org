@@ -172,5 +172,7 @@ You can visit Jaeger at localhost:31001/jaeger
   - I guess if you're not using the proxies you may not see as many spans
 - The hardest thing about working with distributed traces is finding your traces
   - I definitely feel this!
+** Why you need to propagate headers
+- Because that's how istio instruments distributed tracing via the sidecar proxies
 
 * Traffic Management
