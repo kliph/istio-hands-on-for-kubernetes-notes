@@ -174,5 +174,9 @@ You can visit Jaeger at localhost:31001/jaeger
   - I definitely feel this!
 ** Why you need to propagate headers
 - Because that's how istio instruments distributed tracing via the sidecar proxies
-
+** Metrics with Grafana
+- It's pretty complicated.  May be worth working through a tutorial to get familiar with it https://grafana.com/tutorials/.
+- Where did these dashboards come from?  Looks like all the dashboards are defined in the manifests that we deploy when we deploy istio locally.  I think Grafana provides these as an Istio Integration https://istio.io/latest/docs/ops/integrations/grafana/
 * Traffic Management
+
+* Load Balancing
